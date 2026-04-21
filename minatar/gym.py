@@ -39,7 +39,7 @@ class BaseEnv(gym.Env):
         reward, done = self.game.act(action)
         if self.render_mode == "human":
             self.render()
-        return self.game.state(), reward, done, False, {}
+        return self.game.state().astype(np.uint8), reward, done, False, {}
 
     def seed(self, seed=None):
         self.game.seed(seed)
@@ -50,7 +50,7 @@ class BaseEnv(gym.Env):
         self.game.reset()
         if self.render_mode == "human":
             self.render()
-        return self.game.state(), {}
+        return self.game.state().astype(np.uint8), {}
 
     def render(self):
         if self.render_mode is None:
@@ -61,7 +61,7 @@ class BaseEnv(gym.Env):
             )
             return
         if self.render_mode == "array":
-            return self.game.state()
+            return self.game.state().astype(np.uint8)
         elif self.render_mode == "human":
             self.game.display_state(self.display_time)
         elif self.render_mode == "rgb_array": # use the same color palette of Environment.display_state
